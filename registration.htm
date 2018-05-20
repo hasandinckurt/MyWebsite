@@ -12,9 +12,89 @@
   font-size: 22px;
   background-color:red;
 }
+.renk{
+		color: #FF0000;
+		font-size: 10pt;
+	}
+
   </style>
 </head>
 <body>
+<script >
+
+function doğrulama() {
+    var x = document.forms["form1"]["ad"].value;
+    if (x == "") {
+        alert("İsim girmeniz gerekmektedir");
+        return false;
+    }
+	if (!/^[a-zA-Z]*$/g.test(document.form1.ad.value)) {
+        alert("İsimde geçersiz karakter var");
+        return false;
+    }
+	var y = document.forms["form1"]["soyad"].value;
+    if (y == "") {
+        alert("Soyad girmeniz gerekmektedir");
+        return false;
+    }
+	
+	 if (!/^[a-zA-Z]*$/g.test(document.form1.soyad.value)) {
+        alert("Soyadda geçersiz karakter var");
+        return false;
+    }
+	var z = document.forms["form1"]["dogumtarihi"].value;
+    if (z == "") {
+        alert("Doğum tarihini girmeniz gerekmektedir");
+        return false;
+    }
+	
+	var bugün = new Date();
+	var currentyear = bugün.getFullYear();
+	var inputdate = document.getElementById("datee").value;
+	var inputyear = inputdate.substring(6, 10);
+	var pattern =/(^(((0[1-9]|1[0-9]|2[0-8])[-](0[1-9]|1[012]))|((29|30|31)[-](0[13578]|1[02]))|((29|30)[-](0[4,6,9]|11)))[-](19|[2-9][0-9])\d\d$)|(^29[-]02[-](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
+    var s = document.forms["form1"]["dogumtarihi"].value.match(pattern);
+    if (!s) {
+	alert("Geçersiz tarih girdiniz");	
+        return false;
+	}
+	else if(inputyear > currentyear){
+		alert("geçersiz tarih girdiniz");	
+		return false;
+	}
+	
+	
+	var v = document.forms["form1"]["Email"].value;
+    if (v == "") {
+        alert("E-mail girmeniz gerekmektedir");
+        return false;
+    }
+	var x = document.forms["form1"]["Email"].value;
+    var a = x.indexOf("@");
+    var d = x.lastIndexOf(".");
+    if (a<1 || d<a+2 || d+2>=x.length) {
+        alert("Geçersiz e-mail adresi");
+        return false;
+    }
+	var b = document.forms["form1"]["şifre"].value;
+    if (b == "") {
+        alert("Şifre girmeniz gerekmektedir");
+        return false;
+    }
+	
+	var pass= document.forms["form1"]["şifre"].value.length;
+	 if (pass < 6 || pass > 15) { 
+    alert( "Şifre 6-15 karakter arasında olmalıdır"); 
+    return false;
+    }
+    if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).*$/.test(document.forms["form1"]["şifre"].value)){
+	alert("Şifre 1 büyük harf,1 sayı ve 1 özel karakter içermelidir");
+	return false;
+	}
+	
+}
+</script>
+
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <ul class="navbar-nav">
 	<li class="nav-item"><a class="nav-link" href="home.htm">Home</a></li> 
@@ -27,33 +107,37 @@
   </ul>
 </nav>
 	
- <form action="accept.htm">
+ <form name="form1" onsubmit="return doğrulama()" action="Calculator.htm">
 	<center><div class="register"><br>
 		<table border="0">
 		<tr>
+			
 			<td>Ad:</td>
-			<td><input type="text" name="userName"/></td>
+			<td><input type="text" name="ad"/></td>
+	
 		</tr>
 		<tr>
 			<td>Soyad:</td>
-			<td><input type="text" name="surname"/></td>
+			<td><input type="text" name="soyad"/></td>
+			
 		</tr>
 		<tr>
 			<td>Doğum tarihi:</td>
-			<td><input type="date" name="bDate"/></td>
+			<td><input id="datee" type="text" name="dogumtarihi" placeholder="dd-mm-yyyy"/></td>
 		</tr>
 		<tr>
 			<td>Email:</td>
-			<td><input type="email" name="userEmail"/></td>
+			<td><input type="text" name="Email"/></td>
 		</tr>
 		<tr>
 			<td>Şifre:</td>
-			<td><input type="password" name="userPass"/></td>
+			<td><input type="password" name="şifre"/>
+			<p class="renk">*Şifre en az 6 karakter içermelidir ve 1 büyük harf,1 sayı,1 özel karakter içermelidir</p></td>
 		</tr>
 		</tr>
 		<tr>
 			<td>Cinsiyet:</td>
-			<td><select name="gender">  
+			<td><select name="cinsiyet">  
 		<option>Erkek</option>  
 		<option>Kadın</option>  
 		<option>Diğer</option>  
